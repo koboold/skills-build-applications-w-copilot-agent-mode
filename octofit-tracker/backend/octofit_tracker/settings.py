@@ -53,7 +53,13 @@ MIDDLEWARE = [
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-ALLOWED_HOSTS = ['*']
+import os
+# Allow localhost and Codespace URL
+codespace_name = os.environ.get('CODESPACE_NAME')
+codespace_host = f"{codespace_name}-8000.app.github.dev" if codespace_name else None
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if codespace_host:
+    ALLOWED_HOSTS.append(codespace_host)
 
 ROOT_URLCONF = 'octofit_tracker.urls'
 
@@ -87,8 +93,8 @@ DATABASES = {
         'CLIENT': {
             'host': 'localhost',
             'port': 27017,
-            'username': '',
-            'password': '',
+            'username': 'octofit_user',
+            'password': 'octofit_dev_pw_4b7e2c',
             'authSource': 'admin',
             'authMechanism': 'SCRAM-SHA-1',
         },
